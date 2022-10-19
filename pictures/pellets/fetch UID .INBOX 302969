@@ -1,0 +1,166 @@
+Return-Path: <no-reply=csa-iot.org@mail1.wpengine.com>
+Delivered-To: akhe@eurosource.se
+Received: from s326.loopia.se ([172.22.191.6])
+	by s974.loopia.se with LMTP
+	id mCl2E5a9T2P80QAAqE154A
+	(envelope-from <no-reply=csa-iot.org@mail1.wpengine.com>)
+	for <akhe@eurosource.se>; Wed, 19 Oct 2022 11:04:22 +0200
+Received: from s980.loopia.se ([172.22.200.24])
+	by s326.loopia.se with LMTP
+	id oIlKE5a9T2OtqgAAhlaDUw
+	(envelope-from <no-reply=csa-iot.org@mail1.wpengine.com>)
+	for <akhe@eurosource.se>; Wed, 19 Oct 2022 11:04:22 +0200
+Received: from s476.loopia.se (unknown [172.22.191.6])
+	by s980.loopia.se (Postfix) with ESMTP id 4DE0C2201666
+	for <akhe@eurosource.se>; Wed, 19 Oct 2022 11:04:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at amavis.loopia.se
+X-Spam-Flag: NO
+X-Spam-Score: 0.351
+X-Spam-Level:
+X-Spam-Status: No, score=0.351 tagged_above=-999 required=12
+	tests=[DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+	HEADER_FROM_DIFFERENT_DOMAINS=0.25, HTML_MESSAGE=0.001,
+	MIME_HTML_ONLY=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001]
+	autolearn=disabled
+Authentication-Results: s476.loopia.se (amavisd-new); dkim=pass (2048-bit key)
+	header.d=mail1.wpengine.com
+Received: from s899.loopia.se ([172.22.191.5])
+	by s476.loopia.se (s476.loopia.se [172.22.190.16]) (amavisd-new, port 10024)
+	with LMTP id MwgC4419wUEO for <akhe@eurosource.se>;
+	Wed, 19 Oct 2022 11:04:21 +0200 (CEST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=23.83.216.5; helo=aqua.pear.relay.mailchannels.net; envelope-from=no-reply=csa-iot.org@mail1.wpengine.com; receiver=<UNKNOWN> 
+Received: from aqua.pear.relay.mailchannels.net (aqua.pear.relay.mailchannels.net [23.83.216.5])
+	by s899.loopia.se (Postfix) with ESMTPS id A59992C8BA64
+	for <akhe@grodansparadis.com>; Wed, 19 Oct 2022 11:04:20 +0200 (CEST)
+X-Sender-Id: wpengine|x-authuser|1c928ad9a18f4f0f7a532beb09c299410164d2da
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 8A7E05026B4
+	for <akhe@grodansparadis.com>; Wed, 19 Oct 2022 09:04:16 +0000 (UTC)
+Received: from pod-114796 (unknown [127.0.0.6])
+	(Authenticated sender: wpengine)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 1DD7A5026DA
+	for <akhe@grodansparadis.com>; Wed, 19 Oct 2022 09:04:16 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1666170256; a=rsa-sha256;
+	cv=none;
+	b=WBdlJf3IXDwMHFF0ec5eC1WveZyIUHaHD5Wu6iweHJXo77p3a6w7lrI3+9M+vdqc4b5WsT
+	ikg0Gu7jhixF/6C8DJBydu5lMB/JbsUu/rpY/MdMOBrte057Ab7D+R5Fu6WRSpGKoTLYFM
+	/paSKsOauPPhiR+a0FhNa/7XW7+hW30/V6A9O2f7iC48r5lRFD7qNlr4qdrcQkoiYLJQa0
+	GbZJVGRJ5ncgbMW2Aayc7mVh/MhH9aKDq/MGKx9IkyMzp3xrutJSHbpwsrMLr2Og5dEaB3
+	wU4CxxtGUv+udR1JE1Cde2kMEYv/gmpAjHUpVqAw5j6gbeXtM5b1Dju0kKCosg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1666170256;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=lyjFRP0W/aOV/+C3x9E/XFTyONXUiGzZBJ74F8DVqQY=;
+	b=SLjuH/ZclJD/Q4PFKclIUTRBZtdy4xrYTriQWU1iEsahrveWW4gFGjQ7MxaA9l3K3ar+5t
+	mZ/hEYYwgqhLQ6Gm2dpQSB+9wCHIKxYvayLrSqyC0t5cTnLCgpfUgn9GbQuTGPyvmT49f4
+	QiWKEkeWNpgnf1djfInZx/NbchHth5H/yB1afEiSwv/e7f8ypkKYMhz8RrCs9+1sBLjbEy
+	b2yhIZwptYCA+y2l9EXaJzKiMBg/zQcmb8vVWliwDyaVMGCx2t5/jUGO5uxYCjVS2jam3t
+	MzDdQJPeD+VEDDoUwyG3WfdOTnPIhi1w+PKWJ1JxQgyRzcmY5K6cBd79TJKs1g==
+ARC-Authentication-Results: i=1;
+	rspamd-6955c7cd5b-nhnpq;
+	auth=pass smtp.auth=wpengine
+ smtp.mailfrom="no-reply=csa-iot.org@mail1.wpengine.com"
+X-Sender-Id: wpengine|x-authuser|1c928ad9a18f4f0f7a532beb09c299410164d2da
+X-MC-Relay: Good
+X-MailChannels-SenderId:
+ wpengine|x-authuser|1c928ad9a18f4f0f7a532beb09c299410164d2da
+X-MailChannels-Auth-Id: wpengine
+X-Desert-Desert: 5be5ade533eced73_1666170256407_1186671101
+X-MC-Loop-Signature: 1666170256407:3324840070
+X-MC-Ingress-Time: 1666170256407
+Received: from pod-114796 (8.226.185.35.bc.googleusercontent.com
+ [35.185.226.8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.119.144.180 (trex/6.7.1);
+	Wed, 19 Oct 2022 09:04:16 +0000
+Received: from pod-114796 (localhost [127.0.0.1])
+	by pod-114796 (Postfix) with ESMTP id AFC6141FEF
+	for <akhe@grodansparadis.com>; Wed, 19 Oct 2022 09:04:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail1.wpengine.com;
+	s=mx; t=1666170255; bh=lyjFRP0W/aOV/+C3x9E/XFTyONXUiGzZBJ74F8DVqQY=;
+	h=To:Subject:Date:From:Reply-To:From;
+	b=kRPqEbEkcmh4ySGPgqHxxGLdrvBWd+ZkTzj69jaEXshy44y7SiOlstM/T0hLnWX5q
+	 L/B9rpKrBxqWEPBS9npukvr+xkYhCjFFT+NDX02fBSb76Xu3ToN9oBXuh1/7fi8kfM
+	 e29sPwlAzyKytSjFP1/wQnNVEAWA7bxOrLFeqRAxnPFtZWHLXKD/bjE0HjUjl4SdO/
+	 5RlMkNQo0yqbnm589wZfc/brNw8Ln205XgMjTJ9sFdn32aYJcSkURff/Mt2GxS1LUB
+	 +/g23WR0USrHtqnPwjVjmdPupAFM2yrkDlMuVm8Oj1ezQe9i3b2blHlwxG0XYQPLuS
+	 27zxQMQ2APROg==
+Received: from pod-114796:apache2_74:256 (localhost [127.0.0.1])
+	by pod-114796 (Postfix) with SMTP id A5BAA41FDD
+	for <akhe@grodansparadis.com>; Wed, 19 Oct 2022 09:04:14 +0000 (UTC)
+Received: by pod-114796:apache2_74:256 (sSMTP sendmail emulation); Wed, 19 Oct 2022 09:04:14 +0000
+X-AuthUser: 1c928ad9a18f4f0f7a532beb09c299410164d2da
+To: akhe@grodansparadis.com
+Subject: =?us-ascii?Q?Connectivity_Standards_Alliance_Document_Downlo?=  =?us-ascii?Q?ad?=
+X-PHP-Originating-Script: 33:PHPMailer.php
+Date: Wed, 19 Oct 2022 09:04:14 +0000
+From: Connectivity Standards Alliance <no-reply@csa-iot.org>
+Reply-To: no-reply@csa-iot.org
+Message-ID: <rHpbbjrNu0ay7HuQw8uRjOt5LSVwL9c6rSiBDJ88@csa-iot.org>
+X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+=09<head>
+=09=09<title>Connectivity Standards Alliance Document Download</title>
+=09</head>
+=09<body>
+=09=09Hello,<br />
+<br />
+You are receiving this email because you have requested resources for downl=
+oad from the Connectivity Standards Alliance website. We appreciate your in=
+terest and have provided the links to download in the list below:<br />
+<br />
+<ul class=3D"bulleted"><li><a href=3D"https://csa-iot.org/wp-content/upload=
+s/2022/10/22-27349-001_Matter-1.0-Core-Specification76.pdf" target=3D"_blan=
+k">Matter 1.0 Core Specification</a></li><li><a href=3D"https://csa-iot.org=
+/wp-content/uploads/2022/10/22-27350-001_Matter-1.0-Application-Cluster-Spe=
+cification15.pdf" target=3D"_blank">Matter 1.0 Application Cluster Specific=
+ation</a></li><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/10=
+/22-27351-001_Matter-1.0-Device-Library-Specification39.pdf" target=3D"_bla=
+nk">Matter 1.0 Device Library Specification</a></li><li><a href=3D"https://=
+csa-iot.org/wp-content/uploads/2022/01/docs-13-0402-13-00zi-Base-Device-Beh=
+avior-Specification.pdf" target=3D"_blank">Base Device Behavior Specificati=
+on (v 1.0)</a></li><li><a href=3D"https://csa-iot.org/wp-content/uploads/20=
+22/01/07-5123-07-ZigbeeClusterLibrary_Revision_7-1.pdf" target=3D"_blank">Z=
+igbee Cluster Library Specification R7</a></li><li><a href=3D"https://csa-i=
+ot.org/wp-content/uploads/2022/01/07-5123-08-Zigbee-Cluster-Library-1.pdf" =
+target=3D"_blank">Zigbee Cluster Library Specification R8</a></li><li><a hr=
+ef=3D"https://csa-iot.org/wp-content/uploads/2022/01/docs-15-0014-05-0plo-L=
+ightingOccupancyDevice-Specification-V1.0-1.pdf" target=3D"_blank">Zigbee L=
+ighting & Occupancy Device Specification (v 1.0)</a></li><li><a href=3D"htt=
+ps://csa-iot.org/wp-content/uploads/2022/01/docs-05-3474-22-0csg-zigbee-spe=
+cification-1.pdf" target=3D"_blank">Zigbee Specification R22 (v 1.0)</a></l=
+i><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/01/docs-14-056=
+3-18-batt-Green-Power-Basic-specification-v1.1.1.pdf" target=3D"_blank">Zig=
+bee PRO Green Power feature specification Basic functionality set (v 1.1.1)=
+</a></li><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/01/docs=
+-09-5499-26-batt-zigbee-green-power-specification.pdf" target=3D"_blank">Zi=
+gbee PRO Green Power feature Specification 1.0a</a></li><li><a href=3D"" ta=
+rget=3D"_blank">Zigbee Green Power Specification [Simplified Chinese]</a></=
+li><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/01/docs-07-53=
+56-18-0zse-zigbee-smart-energy-profile-specification.pdf" target=3D"_blank"=
+>Zigbee Smart Energy Standard 1.1b</a></li><li><a href=3D"https://csa-iot.o=
+rg/wp-content/uploads/2022/01/docs-07-5356-20-zse-zigbee-smart-energy-profi=
+le-specification.pdf" target=3D"_blank">Zigbee Smart Energy Standard 1.2b</=
+a></li><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/01/docs-0=
+7-5356-21-zse-zigbee-smart-energy-profile-specification.pdf" target=3D"_bla=
+nk">Zigbee Smart Energy Standard 1.4</a></li><li><a href=3D"" target=3D"_bl=
+ank">Zigbee Smart Energy Standard 1.4 [Simplified Chinese]</a></li><li><a h=
+ref=3D"" target=3D"_blank">Zigbee Smart Energy Specification Standard v 1.2=
+a</a></li><li><a href=3D"https://csa-iot.org/wp-content/uploads/2022/01/095=
+262r01ZB_zigbee_rf4ce_sc-ZigBee_RF4CE_Specification_public.pdf" target=3D"_=
+blank">Zigbee Rf4ce Specification v1.01</a></li></ul><br />
+<br />
+Best Regards,<br />
+<a href=3D"https://csaiot.wpengine.com/about/"><img class=3D"alignleft" src=
+=3D"https://csaiot.wpengine.com/wp-content/uploads/2022/01/csa_sig.png" alt=
+=3D"Connectivity Standards Alliance" width=3D"260" height=3D"64" /></a>
+=09</body>
+</html>
